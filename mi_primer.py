@@ -96,3 +96,80 @@ print("Est. aprobados exactamente una materia:", M ^ E)
 
 ## PRODUCTO CARTESIANO ##
 
+A = {1, 2, 3}
+B = {"do", "re"}
+
+# Producto cartesiano por comprensión
+AxB = {(a, b) for a in A for b in B}        #El conjunto de las parejas (a,b), para cada a en A y cada b en B
+
+print("A × B =", sorted(AxB))
+print("|A| =", len(A), " |B| =", len(B), " |A × B| =", len(AxB))    # len - cardinalidad 
+print("¿Se cumple |A × B| == |A| · |B|?", len(AxB) == len(A) * len(B))
+
+# La Conmutatividad entre conjuntos
+from itertools import product       #Product calcula el producto cartesiano entre 2 o mas combinaciones
+
+BxA = set(product(B,A))             #Genera un conjunto (set()) de todas las tuplas entre B y A
+print("B x A =", sorted(BxA))       
+print("A x B == B x A?", AxB == BxA)    #False: el producto cartesiano no es conmutativo
+
+# Grafico
+import matplotlib.pyplot as plt     #matplotlib es la biblio para graficos
+
+A = {1, 2, 3}
+B = {1, 2}
+AxB = {(a, b) for a in A for b in B}        #Doble bluque para crear la tupla (a, b) y se agrega al set AxB
+                                            #Hace lo mismo que "set(product(A, B)) usando itertools. Se usa sintaxis de Python
+
+xs = [par[0] for par in AxB]                #Coord. Horizontales, par[0] accede al primer elemento de la tupla (indice 0)
+ys = [par[1] for par in AxB]                #Coord. Verticales, par[1] accede al segundo elemento de la tupla (indice 1)
+
+plt.figure(figsize=(5, 3.2))                    #Tamanio del graph: ancho x alto, en pulgadas
+plt.scatter(xs, ys, s=80, color="darkblue")     #Scatter -> grafico de dispersion: s=80 es el tamanio de cada punto azul (darkblue)
+plt.title("A × B con A = {1, 2, 3} y B = {1, 2}") #Titulos del grafico
+plt.xlabel("A (primera coordenada)")    
+plt.ylabel("B (segunda coordenada)")
+plt.xticks([1, 2, 3])                       #Fuerzas a que las marcas de X sean exacto los elem. de A
+plt.yticks([1, 2])
+plt.grid(True, linestyle=":")               #Cuadrícula de fondo, con líneas punteadas (:)
+plt.show()
+
+# Ejercicio 5.1: Diseno muestral de una encuesta
+
+sexo = {"Hombre", "Mujer"}
+region = {"Costa", "Sierra", "Amazonia", "Insular"}
+
+#Numero de perfiles muestrales 
+perfiles = set(product(sexo, region))
+print("Total perf. muestrales:", len(perfiles))
+#Conjunto perfiles muestrales = sexo x region 
+print("Perfiles =", sorted(perfiles))     
+
+# Ejercicio 5.2 
+
+A = {0, 1, 2}
+
+#Cardinalidad de A
+A2 = set(product(A,A))
+print("Total AxA=", len(A2))
+plt.figure(figsize=(5, 3.2))                    
+plt.scatter(xs, ys, s=80, color="darkblue")     
+plt.title("A × A con A = {0, 1, 2}") 
+plt.xlabel("A (primera coordenada)")    
+plt.ylabel("A (segunda coordenada)")
+plt.xticks([0, 1, 2])                       
+plt.yticks([0, 1, 2])
+plt.grid(True, linestyle=":")               
+plt.show()
+
+AxA = {(a, b) for a in A for b in A}
+xs = [par[0] for par in AxA]
+ys = [par[1] for par in AxA]
+
+plt.figure(figsize=(4, 4))
+plt.scatter(xs, ys, s=90, color="darkred")
+plt.title("A × A con A = {0, 1, 2}")
+plt.xticks([0, 1, 2])
+plt.yticks([0, 1, 2])
+plt.grid(True, linestyle=":")
+plt.show()
